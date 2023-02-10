@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+   <html lang="en">
+       include head.pug
+       <body>
+       <div class="jumbotron">
+           include navigation.pug
+           <h1>Raumtabelle</h1>
+       </div>
+       <div class="container">
+           <div class="row">
+               <div class="col-4">
+                   <h3>In Datenbank schreiben:</h3>
+                   <div class="input-group mb-3">
+                       <form method="post">
+                           <div class="form-group">
+                               <small id="vorname" class="form-text text-muted">Wähle einen Raumtypen aus</small>
+                                <select name="raumart" class="form-select form-select-lg" aria-label="Default select example">
+                                    option(selected)= "Raumart auswählen..."
+                                if raumart
+                                    each val in raumart
+                                        option(value=val.raumart)= val.raumart
+                                </select>
+                           </div>
+                           <div class="form-group">
+                               <input name="sitzplaetze" aria-label="sitzplaetze" placeholder="Sitzplaetze" type="text" class="form-control" id="inputSitzplaetze">
+                           </div>
+                           <div class="form-group">
+                               <input name="raumbezeichner" aria-label="raumbezeichner" placeholder="Raumbezeichner" type="text" class="form-control" id="inputRaumbezeichner">
+                           </div>
+                           <button type="submit" class="btn btn-primary">Nutzer erstellen</button>
+                       </form>
+                   </div>
+               </div>
+               <div class="col-8">
+                   <h3>Aus Datenbank lesen: Tabelle Raum</h3>
+                   <table class="table table-hover">
+                       <thead>
+                       <tr>
+                            th
+                                form(method="get")
+                                    button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="id" )='#'
+                            th
+                                form(method="get")
+                                    button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="raumart" )="Raumart"
+                            th
+                                form(method="get")
+                                    button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="sitzplaetze")="Sitzplaetze"
+                            th
+                                form(method="get")
+                                    button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="raumbezeichner")="Raumbezeichner"
+                                    <th scope="col"></th>
+                       </tr>
+                       </thead>
+                       <tbody>
+                       each val in raum
+                           tr
+                               td(type=button class="btn-link")= val.id
+                               td= val.raumart
+                               td= val.sitzplaetze
+                               td= val.raumbezeichner
+                               td
+                                   form(method="post")
+                                       button(type='submit' method="post" class="btn btn-outline-danger"  name="id" value=val.id)= "Löschen"
+                       </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
+       </body>
+   </html>

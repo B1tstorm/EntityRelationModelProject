@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+    <html lang="en">
+         include head.pug
+         <body>
+             <div class="jumbotron">
+                 include navigation.pug
+                 <h1>Schülertabelle</h1>
+             </div>
+             <div class="container">
+                 <div class="row">
+                     <div class="col-4">
+                         <h3>In Datenbank schreiben:</h3>
+                         <div class="input-group mb-3">
+                             <form method="post">
+                                 <div class="form-group">
+                                     <small id="vorname" class="form-text text-muted">Wir teilen Ihre Daten mit niemandem!</small>
+                                     <input name="s_vorname" aria-label="vorname" placeholder="Vorname" type="text" class="form-control" id="inputVorname" aria-describedby="vorname">
+                                 </div>
+                                 <div class="form-group">
+                                     <input name="s_nachname" aria-label="nachname" placeholder="Nachname" type="text" class="form-control" id="inputNachname">
+                                 </div>
+                                 <div class="form-group">
+                                     <input name="s_schuljahr" aria-label="schuljahr" placeholder="Schuljahr" type="text" class="form-control" id="inputSchuljahr">
+                                 </div>
+                                 <div class="form-group">
+
+                                    <select name="klassen_id" class="form-select form-select-lg" aria-label="Default select">
+                                        option(selected)= "Klasse auswählen..."
+                                    if klassen
+                                        each val in klassen
+                                            option(value=val.id)= val.jahrgang + val.bezeichner
+                                    </select>
+                                 <small id="vorname" class="form-text text-muted">#Entweder eine Richtige klasse oder nichts eingeben#</small>
+                                 </div>
+                                 <div class="form-group">
+                                 <input name="s_email" aria-label="s_email" placeholder="Schüler E-mail" type="text" class="form-control" id="inputS_email">
+                                 </div>
+                                 <button type="submit" class="btn btn-primary">Nutzer erstellen</button>
+                             </form>
+                         </div>
+                     </div>
+                     <div class="col-8">
+                         <h3>Aus Datenbank lesen: Tabelle Schüler</h3>
+                         <table class="table table-hover">
+                             <thead>
+                             <tr>
+                                 th
+                                     form(method="get")
+                                         button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="id" )='#'
+                                 th
+                                     form(method="get")
+                                         button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="s_vorname" )="Vorname"
+                                 th
+                                     form(method="get")
+                                         button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="s_nachname")="Nachname"
+                                 th
+                                     form(method="get")
+                                         button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="s_schuljahr")="Schuljahr"
+                                 th
+                                     form(method="get")
+                                         button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="klassen_id")="Klassen_ID"
+                                 th
+                                     form(method="get")
+                                         button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="s_email")="Email"
+                                         <th scope="col"></th>
+                             </tr>
+                             </thead>
+                             <tbody>
+                             each val in schueler
+                                 tr
+                                     td(type=button class="btn-link")= val.id
+                                     td= val.s_vorname
+                                     td= val.s_nachname
+                                     td= val.s_schuljahr
+                                     td= val.jahrgang + val.bezeichner
+                                     td
+                                         a(href="mailto:" + val.s_email)= val.s_email
+                                     td
+                                         form(method="post")
+                                              button(role="button" type='submit' method="get" class="btn btn-outline-danger" name="id" value=val.id)= "Löschen"
+                             </tbody>
+                         </table>
+                     </div>
+                 </div>
+             </div>
+         </body>
+    </html>

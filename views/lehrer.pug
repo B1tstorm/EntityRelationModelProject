@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+include head.pug
+<body>
+    <div class="jumbotron">
+        include navigation.pug
+        <h1>Lehrertabelle</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h3>In Datenbank schreiben:</h3>
+                <div class="input-group mb-3">
+                    <form method="post">
+                        if inputs === undefined
+                            div.form-group
+                                input(name="l_vorname" aria-label="name" placeholder="Vorname" type="text" class="form-control" aria-describedby="name" id="inputVorname")
+                            div.form-group
+                                input(name="l_nachname" aria-label="address" placeholder="Nachname" type="text" class="form-control" id="inputNachname")
+                            div.form-group
+                                input(name="l_email" aria-label="address" placeholder="Email" type="text" class="form-control" id="inputEmail")
+                        else
+                            each val in inputs
+                                div.form-group
+                                    input(value=val.id name="id" aria-label="name" placeholder="Vorname" type="hidden" class="form-control" aria-describedby="name")
+                                div.form-group
+                                    input(value=val.l_vorname name="l_vorname" aria-label="name" placeholder="Vorname" type="text" class="form-control" aria-describedby="name")
+                                div.form-group
+                                    input(value=val.l_nachname name="l_nachname" aria-label="name" placeholder="Nachname" type="text" class="form-control" aria-describedby="name")
+                                div.form-group
+                                    input(value=val.l_email name="l_email" aria-label="email" placeholder="Email" type="text" class="form-control" id="inputEmail")
+                        <small id="name" class="form-text text-muted">Wir teilen Ihre Daten mit niemandem!</small>
+                        <button type="submit" class="btn btn-primary mt-3">Nutzer erstellen</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-8">
+                <h3>Aus Datenbank lesen: Tabelle Lehrer</h3>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        th
+                            form(method="get")
+                                button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="id" )='#'
+                        th
+                            form(method="get")
+                                button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="l_vorname" )="Vorname"
+                        th
+                            form(method="get")
+                                button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="l_nachname")="Nachname"
+                        th
+                            form(method="get")
+                                button(class="btn btn-link btm-sm" type="supmit" name="order_by" value="l_email")="E-Mail"
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        each val in lehrer
+                            tr
+                                td
+                                    form(method="get")
+                                        button(type="submit" class="btn btn-link" name="update_by" value=val.id)= val.id
+                                td= val.l_vorname
+                                td= val.l_nachname
+                                td
+                                    a(href="mailto:" + val.l_email)= val.l_email
+                                td
+                                    form(method="post")
+                                        button(type='submit' class="btn btn-outline-danger" name="loesch_id" value=val.id)= "Löschen"
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

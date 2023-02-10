@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+include head.pug
+<body>
+    <div class="jumbotron">
+        include navigation.pug
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-4">
+                <h3>Willkommen in der Matrix</h3>
+                <p>Falls sie Probleme mit der Anwendung haben, melden sie sich bei einem der Admins.</p>
+            </div>
+            <div class="col-8">
+                <h3>Admins:</h3>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Vorname</th>
+                        <th scope="col">Nachname</th>
+                        <th scope="col">Studiengang</th>
+                        <th scope="col">Semester</th>
+                        <th scope="col">Matrikelnummer</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    each val in admins
+                        tr
+                            th= val.id
+                            td= val.vorname
+                            td= val.nachname
+                            td= val.studiengang
+                            td= val.semester
+                            td= val.matrikelnr
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
